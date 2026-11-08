@@ -1,14 +1,17 @@
 import json
 from SPARQLWrapper import SPARQLWrapper, JSON, POST, GET
+from config import FUSEKI_ADMIN_PASSWORD, FUSEKI_USER
 
 class FusekiSparql:
-    def __init__(self, endpoint_url: str = "http://localhost:3030/TADS_2026_2/query"):
+    def __init__(self, endpoint_url: str = "http://localhost:3030/TADS_2026_2"):
         """
         Inicializa a conexão com o endpoint SPARQL do Apache Jena Fuseki.
         O endpoint pode ser substituído pela variável FUSEKI_QUERY_URL.
         """
         self.endpoint_url = endpoint_url
         self.sparql = SPARQLWrapper(endpoint_url)
+        if FUSEKI_ADMIN_PASSWORD:
+            self.sparql.setCredentials(FUSEKI_USER, FUSEKI_ADMIN_PASSWORD)
 
     def execute_query(self, query: str) -> dict:
         """

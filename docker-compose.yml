@@ -3,12 +3,12 @@ services:
     image: stain/jena-fuseki:latest
     environment:
       ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD}
+      FUSEKI_DATASET_1: TADS_2026_2
     volumes:
       - fuseki-data:/fuseki
       - ./backend/data:/staging:ro
     ports:
       - "3030:3030"
-    command: ["--update", "--tdb2", "--loc", "/fuseki/databases/TADS_2026_2", "/TADS_2026_2"]
 
   backend:
     build:
@@ -16,7 +16,7 @@ services:
     environment:
       GROQ_API_KEY: ${GROQ_API_KEY}
       GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-120b}
-      FUSEKI_QUERY_URL: http://fuseki:3030/TADS_2026_2/query
+      FUSEKI_QUERY_URL: http://fuseki:3030/TADS_2026_2
       FUSEKI_USER: admin
       FUSEKI_ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD}
     depends_on:
