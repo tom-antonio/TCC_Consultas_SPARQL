@@ -3,7 +3,14 @@ import re
 import pdfplumber
 from groq import Groq
 from SPARQLWrapper import SPARQLWrapper, POST
-from config import GROQ_API_KEY, GROQ_MODEL, ONTOLOGY_PREFIX, FUSEKI_QUERY_URL
+from config import (
+    FUSEKI_ADMIN_PASSWORD,
+    FUSEKI_QUERY_URL,
+    FUSEKI_USER,
+    GROQ_API_KEY,
+    GROQ_MODEL,
+    ONTOLOGY_PREFIX,
+)
 
 # Endpoint para atualização de dados no Fuseki (/update)
 FUSEKI_UPDATE_URL = FUSEKI_QUERY_URL.rsplit("/", 1)[0] + "/update"
@@ -13,6 +20,8 @@ class PDFIngestionPipeline:
         self.groq_client = Groq(api_key=GROQ_API_KEY)
         self.model_name = model_name
         self.sparql_update = SPARQLWrapper(FUSEKI_UPDATE_URL)
+        if FUSEKI_ADMIN_PASSWORD:
+            self.sparql_update.setCredentials(FUSEKI_USER, FUSEKI_ADMIN_PASSWORD)
 
     def extract_text_from_pdf(self, pdf_path: str) -> str:
         """Extrai todo o conteúdo textual do arquivo PDF de horários."""

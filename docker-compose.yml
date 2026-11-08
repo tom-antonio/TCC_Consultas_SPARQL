@@ -1,0 +1,40 @@
+services:
+  fuseki:
+    image: stain/jena-fuseki:latest
+    environment:
+      ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD}
+    volumes:
+      - fuseki-data:/fuseki
+      - ./backend/data:/staging:ro
+    ports:
+      - "3030:3030"
+    command: ["--update", "--tdb2", "--loc", "/fuseki/databases/TADS_2026_2", "/TADS_2026_2"]
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-120b}
+      FUSEKI_QUERY_URL: http://fuseki:3030/TADS_2026_2/query
+      FUSEKI_USER: admin
+      FUSEKI_ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD}
+    depends_on:
+      - fuseki
+    ports:
+      - "8000:8000"
+
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    environment:
+      STORAGE_DIR: /app/server/storage
+    volumes:
+      - anythingllm-storage:/app/server/storage
+    depends_on:
+      - backend
+    ports:
+      - "3001:3001"
+
+volumes:
+  fuseki-data:
+  anythingllm-storage:

@@ -7,6 +7,8 @@ load_dotenv()
 # URL do endpoint SPARQL do Fuseki (dataset 'TADS_2026_2')
 FUSEKI_QUERY_URL = os.getenv("FUSEKI_QUERY_URL", "http://localhost:3030/TADS_2026_2/query")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+FUSEKI_USER = os.getenv("FUSEKI_USER", "admin")
+FUSEKI_ADMIN_PASSWORD = os.getenv("FUSEKI_ADMIN_PASSWORD")
 
 # Chave de API da LLM (OpenAI, Groq, etc.)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
