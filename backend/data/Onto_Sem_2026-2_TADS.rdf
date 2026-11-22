@@ -1,0 +1,1318 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6/"
+     xml:base="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:untitled-ontology-6="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministra -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministra">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministraEm -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministraEm">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministraTurma -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministraTurma">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministradaPor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministradaPor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ministradaPor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreNoDia -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreNoDia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ofereceDisciplina -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ofereceDisciplina">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ofereceTurma -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ofereceTurma">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertenceATurma -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertenceATurma">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertenceAo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertenceAo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertencePeriodo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#pertencePeriodo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#possuiSala -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#possuiSala">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#requerSala -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#requerSala">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#temDisciplina -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#temDisciplina">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSemana -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSemana">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#horaFim -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#horaFim">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#horaInicio -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#horaInicio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeDisciplina -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeDisciplina">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeProfessor -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeProfessor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeSala -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeSala">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeTurno -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#nomeTurno">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#temCargaHoraria -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#temCargaHoraria">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">108</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Aula"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso">
+        <rdfs:label xml:lang="pt-br">Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoI"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoII"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoIII"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreNoDia"/>
+                        <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSab"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaTCC -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaTCC">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaI"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaII"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreEmHorario"/>
+                                <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#ocorreNoDia"/>
+                        <owl:hasValue rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSab"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>15:30</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>14:00</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>17:15</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>15:45</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoIII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoIII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>19:00</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>17:30</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>08:30</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>07:00</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoManhaII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>10:15</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>08:45</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>20:30</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>19:00</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+        <untitled-ontology-6:horaFim>22:15</untitled-ontology-6:horaFim>
+        <untitled-ontology-6:horaInicio>20:45</untitled-ontology-6:horaInicio>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#cursoTADS -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#cursoTADS">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso"/>
+        <untitled-ontology-6:possuiSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labI"/>
+        <untitled-ontology-6:possuiSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labII"/>
+        <untitled-ontology-6:possuiSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labIII"/>
+        <untitled-ontology-6:possuiSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labRedes"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaDom -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaDom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Domingo</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaQua -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaQua">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Quarta-Feira</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaQui -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaQui">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Quinta-Feira</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSab -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSab">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Sábado</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSeg -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSeg">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Segunda-Feira</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSex -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaSex">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Sexta-Feira</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaTer -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#diaTer">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+        <untitled-ontology-6:diaSemana>Terça-Feira</untitled-ontology-6:diaSemana>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAdmIn -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAdmIn">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Administração de Serviços na Internet</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Algoritmos I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Algoritmos II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAnalis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAnalis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Análise de Sistemas</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Banco de Dados I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Banco de Dados II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disCompG -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disCompG">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Computação Gráfica</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disCompu -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disCompu">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Computação e Sociedade</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEmpre -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEmpre">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Empreendedorismo</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Engenharia de Software I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Engenharia de Software II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEstrut -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEstrut">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Estruturas de Dados</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disFundam -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disFundam">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Fundamentos da Computação</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIngl -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIngl">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Inglês Instrumental</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disInteli -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disInteli">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Inteligência Artificial</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIntera -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIntera">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Interação Humano-computador</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disLegis -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disLegis">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Legislação de Informática</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disLibra -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disLibra">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Libras</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMatem -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMatem">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Matemática</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMetod -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMetod">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Metodologia Científica</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgIII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgIII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação III</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação para Web I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação para Web II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWIII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWIII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Programação para Web III</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter"/>
+        <untitled-ontology-6:nomeDisciplina>Projeto Interdisciplinar I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter"/>
+        <untitled-ontology-6:nomeDisciplina>Projeto Interdisciplinar II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter"/>
+        <untitled-ontology-6:nomeDisciplina>Projeto Interdisciplinar III</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIV -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIV">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaProjInter"/>
+        <untitled-ontology-6:nomeDisciplina>Projeto Interdisciplinar IV</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">81</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disRede -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disRede">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Redes de Computadores</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSegu -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSegu">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Segurança da Informação</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSisteO -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSisteO">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Sistemas Operacionais</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSistem -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSistem">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+        <untitled-ontology-6:nomeDisciplina>Sistemas Distribuídos</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">54</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaTCC"/>
+        <untitled-ontology-6:requerSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labRedes"/>
+        <untitled-ontology-6:nomeDisciplina>Trabalho de Conclusão de Curso I</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">108</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#DisciplinaTCC"/>
+        <untitled-ontology-6:requerSala rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labRedes"/>
+        <untitled-ontology-6:nomeDisciplina>Trabalho de Conclusão de Curso II</untitled-ontology-6:nomeDisciplina>
+        <untitled-ontology-6:temCargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">108</untitled-ontology-6:temCargaHoraria>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labI -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labI">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        <untitled-ontology-6:nomeSala>Laboratório TADS 01</untitled-ontology-6:nomeSala>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        <untitled-ontology-6:nomeSala>Laboratório TADS 02</untitled-ontology-6:nomeSala>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labIII -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labIII">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        <untitled-ontology-6:nomeSala>Laboratório TADS 03</untitled-ontology-6:nomeSala>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labRedes -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#labRedes">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        <untitled-ontology-6:nomeSala>Laboratório de Redes</untitled-ontology-6:nomeSala>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo6 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profAladir -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profAladir">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Aladir Ferreira da Silva Júnior</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profBenhur -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profBenhur">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Benhur Arantes de Oliveira</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profCelio -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profCelio">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Célio Bernardo de Lima</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profCleuber -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profCleuber">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Cleuber Antônio Teixeira Cardoso</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profDanillo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profDanillo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Danillo Vaz Borges de Assis</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profEliane -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profEliane">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Eliane Raimann</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profFlavio -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profFlavio">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Flávio de Assis Vilela</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profGustavo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profGustavo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Gustavo de Assis Costa</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profJose -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profJose">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>José Gabriel</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profLeizer -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profLeizer">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Leizer Fernandes Moraes</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profMaria -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profMaria">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Maria Cristina</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profMurilo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profMurilo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Murilo de Assis Silva</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profRoney -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profRoney">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Roney Lopes Lima</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profSergio -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profSergio">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Sergio Henrique de Almeida</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profThiago -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profThiago">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Thiago André Rodrigues Leite</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profThiagoV -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profThiagoV">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Thiago Vedovatto</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profVandimar -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#profVandimar">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+        <untitled-ontology-6:nomeProfessor>Vandimar Marques Damas</untitled-ontology-6:nomeProfessor>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_1Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_1Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorI"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disFundam"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIngl"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMatem"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disMetod"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjI"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_2Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_2Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAlgorII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoI"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disCompu"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenI"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disRede"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo2"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_3Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_3Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disBancoII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEngenII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEstrut"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIII"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo3"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_4Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_4Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAdmIn"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disAnalis"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disIntera"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgI"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWI"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProjIV"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_5Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_5Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteI"/>
+        <untitled-ontology-6:ocorreEmHorario rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#HorarioBlocoNoiteII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disSegu"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCI"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo5"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_6Periodo -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turma_TADS_6Periodo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disEmpre"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disLegis"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disProgWIII"/>
+        <untitled-ontology-6:ofereceDisciplina rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#disTCCII"/>
+        <untitled-ontology-6:pertencePeriodo rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#periodo6"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoManha -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoManha">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+        <untitled-ontology-6:nomeTurno>Manhã</untitled-ontology-6:nomeTurno>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoNoite -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoNoite">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+        <untitled-ontology-6:nomeTurno>Noite</untitled-ontology-6:nomeTurno>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoTarde -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#turnoTarde">
+        <rdf:type rdf:resource="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+        <untitled-ontology-6:nomeTurno>Tarde</untitled-ontology-6:nomeTurno>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Curso"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Dia"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Periodo"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turma"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Turno"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Disciplina"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Horario"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Professor"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#Sala"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

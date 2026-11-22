@@ -29,6 +29,55 @@ class LLMPipeline:
                         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                         """
 
+        workload_match = re.search(r"\b(\d{1,3})\s*h(?:oras?)?\b", normalized)
+        if workload_match and "disciplina" in normalized:
+            workload = workload_match.group(1)
+            return prefixes + f"""
+SELECT DISTINCT ?nomeDisciplina ?cargaHoraria ?diaSemana
+WHERE {{
+  ?aula :temDisciplina ?disciplina ;
+        :ocorreNoDia ?dia .
+  ?disciplina :nomeDisciplina ?nomeDisciplina ;
+              :temCargaHoraria ?cargaHoraria .
+  ?dia :diaSemana ?diaSemana .
+  FILTER(?cargaHoraria = {workload})
+}}
+ORDER BY ?nomeDisciplina ?diaSemana
+"""
+
+        if "disciplina" in normalized and "dia" in normalized:
+            discipline_result = self.fuseki.execute_query(prefixes + """
+SELECT DISTINCT ?nomeDisciplina
+WHERE {
+  ?disciplina a :Disciplina ;
+              :nomeDisciplina ?nomeDisciplina .
+}
+""")
+            if discipline_result["success"]:
+                for binding in discipline_result["data"]:
+                    discipline_name = binding.get("nomeDisciplina", {}).get("value")
+                    if not discipline_name:
+                        continue
+                    normalized_name = self._normalize_question(discipline_name)
+                    if normalized_name in normalized:
+                        escaped_name = discipline_name.replace("\\", "\\\\").replace('"', '\\"')
+                        return prefixes + f"""
+SELECT DISTINCT ?nomeDisciplina ?diaSemana ?horaInicio ?horaFim
+WHERE {{
+  ?aula :temDisciplina ?disciplina ;
+        :ocorreNoDia ?dia .
+  OPTIONAL {{ ?aula :ocorreEmHorario ?horario . }}
+  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  ?dia :diaSemana ?diaSemana .
+  OPTIONAL {{
+    ?horario :horaInicio ?horaInicio ;
+             :horaFim ?horaFim .
+  }}
+  FILTER(REGEX(?nomeDisciplina, "{escaped_name}", "i"))
+}}
+ORDER BY ?diaSemana ?horaInicio
+"""
+
         room_instance = None
         if re.search(r"\btads\s*0*1\b", normalized) or "laboratorio tads 01" in normalized:
             room_instance = ":labI"
@@ -195,6 +244,27 @@ ORDER BY ?nomeProfessor
 """
             if day_name in normalized and "disciplina" in normalized:
                 if day_name == "sabado" and (
+                    "matutino" in normalized
+                    or "manha" in normalized
+                ):
+                    return prefixes + f"""
+SELECT DISTINCT ?nomeDisciplina ?cargaHoraria ?horaInicio ?horaFim
+WHERE {{
+  ?aula :ocorreNoDia {day_instance} ;
+        :temDisciplina ?disciplina ;
+        :ocorreEmHorario ?horario .
+  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
+  ?horario :horaInicio ?horaInicio ;
+           :horaFim ?horaFim .
+  VALUES ?horario {{
+    :HorarioBlocoManhaI
+    :HorarioBlocoManhaII
+  }}
+}}
+ORDER BY ?horaInicio ?nomeDisciplina
+"""
+                if day_name == "sabado" and (
                     "vespertino" in normalized
                     or "tarde" in normalized
                     or "vesper" in normalized
@@ -209,11 +279,7 @@ WHERE {{
   OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
   ?horario :horaInicio ?horaInicio ;
            :horaFim ?horaFim .
-  VALUES ?horario {{
-    :HorarioBlocoI
-    :HorarioBlocoII
-    :HorarioBlocoIII
-  }}
+  FILTER(REGEX(STR(?horaInicio), "^(14:|15:|17:)"))
 }}
 ORDER BY ?horaInicio ?nomeDisciplina
 """
@@ -312,6 +378,27 @@ WHERE {{
                 break
         if "laboratorio de redes" in normalized or "lab redes" in normalized:
             room_label = "Laboratório de Redes"
+
+        workload_match = re.search(r"\b(\d{1,3})\s*h(?:oras?)?\b", normalized)
+        if raw_data and workload_match and "disciplina" in normalized:
+            workload = workload_match.group(1)
+            disciplines = {}
+            for item in raw_data:
+                name = item.get("nomeDisciplina")
+                day = item.get("diaSemana")
+                if not name:
+                    continue
+                disciplines.setdefault(name, [])
+                if day and day not in disciplines[name]:
+                    disciplines[name].append(day)
+            if disciplines:
+                lines = [f"Disciplinas com carga horária de {workload}h:", ""]
+                for name, days in disciplines.items():
+                    if days:
+                        lines.append(f"- {name}: {', '.join(days)}")
+                    else:
+                        lines.append(f"- {name}")
+                return "\n".join(lines)
 
         professor_schedule = re.search(
             r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
@@ -450,6 +537,40 @@ WHERE {{
             raw_data
             and "disciplina" in normalized
             and "sabado" in normalized
+            and ("matutino" in normalized or "manha" in normalized)
+        ):
+            names = []
+            details_by_name = {}
+            for item in raw_data:
+                name = item.get("nomeDisciplina")
+                if not name:
+                    continue
+                schedule = (
+                    item.get("horaInicio"),
+                    item.get("horaFim"),
+                )
+                if name not in names:
+                    names.append(name)
+                    details_by_name[name] = []
+                if schedule not in details_by_name[name]:
+                    details_by_name[name].append(schedule)
+            if not names:
+                return "Não foram encontradas disciplinas no período matutino de sábado."
+            lines = ["As disciplinas que ocorrem aos sábados no período matutino são:", ""]
+            for name in names:
+                schedules = [
+                    f"{start}–{end}"
+                    for start, end in details_by_name[name]
+                    if start and end
+                ]
+                suffix = f" ({', '.join(schedules)})" if schedules else ""
+                lines.append(f"- {name}{suffix}")
+            return "\n".join(lines)
+
+        if (
+            raw_data
+            and "disciplina" in normalized
+            and "sabado" in normalized
             and ("vespertino" in normalized or "tarde" in normalized or "vesper" in normalized)
         ):
             names = []
@@ -468,6 +589,25 @@ WHERE {{
                 lines.append(f"- {name}{suffix}")
             lines.extend(["", "Horários vespertinos: 14:00–15:30, 15:45–17:15 e 17:30–19:00."])
             return "\n".join(lines)
+
+        if raw_data and "disciplina" in normalized and "dia" in normalized:
+            entries = []
+            discipline_name = None
+            for item in raw_data:
+                discipline_name = discipline_name or item.get("nomeDisciplina")
+                day = item.get("diaSemana")
+                start = item.get("horaInicio")
+                end = item.get("horaFim")
+                entry = (day, start, end)
+                if entry not in entries:
+                    entries.append(entry)
+
+            if discipline_name and entries:
+                lines = [f"A disciplina {discipline_name} é ministrada nos seguintes dias:", ""]
+                for day, start, end in entries:
+                    schedule = f", {start}–{end}" if start and end else ""
+                    lines.append(f"- {day}{schedule}")
+                return "\n".join(lines)
 
         if raw_data and ("disciplina" in normalized) and (period_number or day_name):
             if period_number:
@@ -556,6 +696,28 @@ WHERE {{
             
             if verbose:
                 print(f"\n[3] Dados Retornados do Fuseki ({len(clean_data)} registro(s)):\n{json.dumps(clean_data, ensure_ascii=False, indent=2)}")
+
+            if not clean_data:
+                aula_count_result = self.fuseki.execute_query("""
+PREFIX : <http://www.semanticweb.org/luan/ontologies/2026/8/untitled-ontology-6#>
+SELECT (COUNT(DISTINCT ?aula) AS ?qtdAulas)
+WHERE {
+  ?aula a :Aula .
+}
+""")
+                aula_count = 0
+                if aula_count_result["success"] and aula_count_result["data"]:
+                    aula_count = int(
+                        aula_count_result["data"][0].get("qtdAulas", {}).get("value", "0")
+                    )
+                if aula_count == 0:
+                    result_log["final_answer"] = (
+                        "Nenhuma instância de Aula foi importada no Fuseki. "
+                        "Envie o PDF do horário pelo endpoint /api/upload-pdf antes de realizar esta consulta."
+                    )
+                    if verbose:
+                        print(f"\n[4] Resposta Final do Agente:\n{result_log['final_answer']}\n")
+                    return result_log
 
             # 3. Formatação da Resposta Final em Linguagem Natural
             if verbose:

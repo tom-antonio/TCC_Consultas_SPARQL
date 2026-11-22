@@ -19,6 +19,8 @@ services:
       FUSEKI_QUERY_URL: http://fuseki:3030/TADS_2026_2
       FUSEKI_USER: admin
       FUSEKI_ADMIN_PASSWORD: ${FUSEKI_ADMIN_PASSWORD}
+    volumes:
+      - anythingllm-storage:/anythingllm-storage
     depends_on:
       - fuseki
     ports:
@@ -36,6 +38,8 @@ services:
       EMBEDDING_MODEL_PREF: ""
     volumes:
       - anythingllm-storage:/app/server/storage
+      - ./anythingllm/reset-on-new-thread.sh:/usr/local/bin/reset-on-new-thread.sh:ro
+    entrypoint: ["/bin/bash", "/usr/local/bin/reset-on-new-thread.sh"]
     depends_on:
       - backend
     ports:
