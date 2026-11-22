@@ -79,7 +79,39 @@ WHERE {{
 }}
 """
 
+        professor_schedule = re.search(
+            r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
+            normalized,
+        )
         if (
+            professor_schedule
+            and (
+                "horario" in normalized
+                or "dia" in normalized
+                or "aula" in normalized
+            )
+        ):
+            professor_name = professor_schedule.group(1)
+            return prefixes + f"""
+SELECT DISTINCT ?nomeProfessor ?nomeDisciplina ?diaSemana ?horaInicio ?horaFim
+WHERE {{
+  ?aula :ministradaPor ?prof ;
+        :temDisciplina ?disciplina ;
+        :ocorreNoDia ?dia ;
+        :ocorreEmHorario ?horario .
+  ?prof :nomeProfessor ?nomeProfessor .
+  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  ?dia :diaSemana ?diaSemana .
+  ?horario :horaInicio ?horaInicio ;
+           :horaFim ?horaFim .
+  FILTER(REGEX(?nomeProfessor, "{professor_name}", "i"))
+}}
+ORDER BY ?diaSemana ?horaInicio
+"""
+
+        if (
+            not professor_schedule
+            and
             "professor" in normalized
             and (
                 "mesmo dia" in normalized
@@ -281,7 +313,40 @@ WHERE {{
         if "laboratorio de redes" in normalized or "lab redes" in normalized:
             room_label = "Laboratório de Redes"
 
+        professor_schedule = re.search(
+            r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
+            normalized,
+        )
         if (
+            raw_data
+            and professor_schedule
+            and (
+                "horario" in normalized
+                or "dia" in normalized
+                or "aula" in normalized
+            )
+        ):
+            entries = []
+            professor_name = raw_data[0].get("nomeProfessor", professor_schedule.group(1))
+            for item in raw_data:
+                key = (
+                    item.get("nomeDisciplina"),
+                    item.get("diaSemana"),
+                    item.get("horaInicio"),
+                    item.get("horaFim"),
+                )
+                if key not in entries:
+                    entries.append(key)
+            if not entries:
+                return f"Não foram encontradas aulas ministradas pelo professor {professor_name}."
+            lines = [f"Horários e dias das aulas ministradas pelo professor {professor_name}:", ""]
+            for discipline, day, start, end in entries:
+                lines.append(f"- {discipline}: {day}, {start}–{end}")
+            return "\n".join(lines)
+
+        if (
+            not professor_schedule
+            and
             "professor" in normalized
             and (
                 "mesmo dia" in normalized
