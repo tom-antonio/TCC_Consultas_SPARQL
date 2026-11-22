@@ -10,10 +10,10 @@ Sua única função nesta etapa é traduzir a pergunta em linguagem natural do u
 ### CLASSES:
 - :Professor (propriedades: :nomeProfessor)
 - :Disciplina (propriedades: :nomeDisciplina, :temCargaHoraria)
-- :DisciplinaLabRedes (subclasse de :Disciplina, restrita ao :labRedes)
 - :DisciplinaProjInter (subclasse de :Disciplina)
 - :DisciplinaTCC (subclasse de :Disciplina)
 - :Sala (propriedades: :nomeSala)
+- :Curso (propriedades: :possuiSala, :ofereceTurma)
 - :Turma (instâncias: :turma_TADS_1Periodo até :turma_TADS_6Periodo)
 - :Periodo (instâncias: :periodo1 até :periodo6)
 - :Dia (propriedades: :diaSemana; instâncias: :diaSeg, :diaTer, :diaQua, :diaQui, :diaSex, :diaSab, :diaDom)
@@ -31,6 +31,19 @@ Sua única função nesta etapa é traduzir a pergunta em linguagem natural do u
 ### PROPRIEDADES DE OBJETO DE :Turma:
 - :ofereceDisciplina -> aponta para :Disciplina
 - :pertencePeriodo -> aponta para :Periodo
+
+### PROPRIEDADES DE OBJETO DE :Disciplina:
+- :requerSala -> aponta para a :Sala específica exigida pela disciplina
+- :temCargaHoraria -> carga horária da disciplina
+
+### PROPRIEDADES DE OBJETO DE :Curso:
+- :possuiSala -> aponta para as salas disponíveis ao curso
+
+### DIFERENÇA ENTRE SALA E TURMA:
+- “TADS 01”, “TADS 02” e “TADS 03” são nomes de salas/laboratórios.
+- “TADS 2º período” ou “TADS_2Periodo” identifica uma turma acadêmica.
+- A pergunta sobre sala deve seguir :ministraEm em :Aula.
+- A pergunta sobre período deve seguir :pertenceATurma ou :ofereceDisciplina em :Turma.
 
 ### REGRAS OBRIGATÓRIAS DE GERAÇÃO:
 1. Retorne APENAS o código SPARQL executável, sem formatação markdown extra (sem ```sparql ... ```).
@@ -54,7 +67,12 @@ SYSTEM_PROMPT_RESPONSE_FORMATTER = """
 Você é um assistente virtual amigável do IFG Câmpus Jataí. 
 Sua tarefa é receber a pergunta do usuário e os dados brutos em JSON retornados da Triplestore Fuseki, e gerar uma resposta clara, natural e objetiva em português.
 
-Se o JSON estiver vazio, informe educadamente que não foram encontradas alocações ou informações para a busca realizada.
+REGRAS OBRIGATÓRIAS:
+1. Use exclusivamente os registros presentes no JSON fornecido.
+2. Não adicione disciplinas, períodos, dias, professores, salas ou horários que não estejam nos dados.
+3. Não cite resultados de outras consultas ou contexto anterior.
+4. Se o JSON estiver vazio, informe somente que não foram encontradas informações para essa pergunta.
+5. Responda apenas o que foi solicitado pelo usuário.
 """
 
 def build_sparql_prompt(user_question: str) -> str:

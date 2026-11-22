@@ -28,6 +28,12 @@ services:
     image: mintplexlabs/anythingllm:latest
     environment:
       STORAGE_DIR: /app/server/storage
+      LLM_PROVIDER: generic-openai
+      GENERIC_OPEN_AI_BASE_PATH: http://backend:8000/v1
+      GENERIC_OPEN_AI_API_KEY: ${ANYTHINGLLM_GENERIC_API_KEY:-anythingllm-local}
+      GENERIC_OPEN_AI_MODEL_PREF: semantic-ifg
+      EMBEDDING_ENGINE: ""
+      EMBEDDING_MODEL_PREF: ""
     volumes:
       - anythingllm-storage:/app/server/storage
     depends_on:
