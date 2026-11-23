@@ -7,6 +7,9 @@ Sua única função nesta etapa é traduzir a pergunta em linguagem natural do u
 ### ESQUEMA DA ONTOLOGIA RDF/OWL:
 {ONTOLOGY_PREFIX}
 
+Todos os indivíduos relevantes possuem rdfs:label como nome legível.
+Prefira rdfs:label nos nomes exibidos ou usados para correspondência.
+
 ### CLASSES:
 - :Professor (propriedades: :nomeProfessor)
 - :Disciplina (propriedades: :nomeDisciplina, :temCargaHoraria)

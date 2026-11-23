@@ -78,15 +78,22 @@ SELECT (COUNT(DISTINCT ?aula) AS ?total) WHERE {{
             ("Disciplinas", ":Disciplina", ":nomeDisciplina"),
             ("Professores", ":Professor", ":nomeProfessor"),
             ("Salas", ":Sala", ":nomeSala"),
-            ("Turmas", ":Turma", ":nomeTurma"),
+            ("Turmas", ":Turma", None),
         ]
         inventory = []
 
         for title, class_name, label_property in resources:
+            legacy_name_clause = (
+                f"OPTIONAL {{ ?recurso {label_property} ?legado . }}\n"
+                if label_property
+                else ""
+            )
             query = f"""{ONTOLOGY_PREFIX}
 SELECT DISTINCT ?recurso ?nome WHERE {{
   ?recurso a {class_name} .
-  OPTIONAL {{ ?recurso {label_property} ?nome . }}
+  OPTIONAL {{ ?recurso rdfs:label ?label . }}
+  {legacy_name_clause}
+  BIND(COALESCE(?label, ?legado) AS ?nome)
 }}
 ORDER BY ?nome
 """
@@ -146,7 +153,9 @@ ORDER BY ?recurso
         sparql.setQuery(f"""{ONTOLOGY_PREFIX}
 SELECT DISTINCT ?recurso ?nome
 WHERE {{
-  ?recurso :nomeDisciplina ?nome .
+  ?recurso :nomeDisciplina ?legado .
+  OPTIONAL {{ ?recurso rdfs:label ?label . }}
+  BIND(COALESCE(?label, ?legado) AS ?nome)
 }}
 ORDER BY ?nome
 """)

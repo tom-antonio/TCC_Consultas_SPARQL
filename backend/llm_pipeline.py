@@ -19,6 +19,11 @@ class LLMPipeline:
         normalized = unicodedata.normalize("NFKD", text.lower())
         return "".join(char for char in normalized if not unicodedata.combining(char))
 
+    def _normalize_name(self, text: str) -> str:
+        normalized = unicodedata.normalize("NFKD", text.lower())
+        normalized = "".join(char for char in normalized if not unicodedata.combining(char))
+        return " ".join(normalized.split())
+
     def _build_deterministic_query(self, user_question: str) -> str | None:
         """Resolve filtros comuns sem depender da LLM para evitar consultas amplas."""
         normalized = self._normalize_question(user_question)
@@ -29,6 +34,64 @@ class LLMPipeline:
                         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
                         """
 
+        day_instances = {
+            "segunda": ":diaSeg",
+            "terca": ":diaTer",
+            "quarta": ":diaQua",
+            "quinta": ":diaQui",
+            "sexta": ":diaSex",
+            "sabado": ":diaSab",
+            "domingo": ":diaDom",
+        }
+        requested_day = next(
+            (name for name, instance in day_instances.items() if name in normalized),
+            None,
+        )
+        time_match = re.search(
+            r"\b(\d{1,2})\s*(?:h|:\s*(\d{2}))"
+            r"(?:\s*(?:ate|a|\-|\u2013|\u2014)\s*"
+            r"(\d{1,2})\s*(?:h|:\s*(\d{2})))?",
+            normalized,
+        )
+        if (
+            "disciplina" in normalized
+            and requested_day
+            and time_match
+        ):
+            start_hour = time_match.group(1).zfill(2)
+            start_minute = time_match.group(2) or "00"
+            start_time = f"{start_hour}:{start_minute}"
+            end_hour = time_match.group(3)
+            end_minute = time_match.group(4)
+            end_time = None
+            if end_hour:
+                end_time = f"{end_hour.zfill(2)}:{end_minute or '00'}"
+
+            end_filter = ""
+            if end_time:
+                end_filter = f'FILTER(?horaInicio = "{start_time}" && ?horaFim = "{end_time}")'
+            else:
+                end_filter = f'FILTER(?horaInicio = "{start_time}")'
+
+            day_instance = day_instances[requested_day]
+            return prefixes + f"""
+SELECT DISTINCT ?nomeDisciplina ?diaSemana ?horaInicio ?horaFim
+WHERE {{
+  ?aula :temDisciplina ?disciplina ;
+        :ocorreNoDia {day_instance} ;
+        :ocorreEmHorario ?horario .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
+  VALUES ?dia {{ {day_instance} }}
+  ?dia :diaSemana ?diaSemana .
+  ?horario :horaInicio ?horaInicio ;
+           :horaFim ?horaFim .
+  {end_filter}
+}}
+ORDER BY ?nomeDisciplina
+"""
+
         workload_match = re.search(r"\b(\d{1,3})\s*h(?:oras?)?\b", normalized)
         if workload_match and "disciplina" in normalized:
             workload = workload_match.group(1)
@@ -37,8 +100,10 @@ SELECT DISTINCT ?nomeDisciplina ?cargaHoraria ?diaSemana
 WHERE {{
   ?aula :temDisciplina ?disciplina ;
         :ocorreNoDia ?dia .
-  ?disciplina :nomeDisciplina ?nomeDisciplina ;
-              :temCargaHoraria ?cargaHoraria .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
+  ?disciplina :temCargaHoraria ?cargaHoraria .
   ?dia :diaSemana ?diaSemana .
   FILTER(?cargaHoraria = {workload})
 }}
@@ -50,7 +115,9 @@ ORDER BY ?nomeDisciplina ?diaSemana
 SELECT DISTINCT ?nomeDisciplina
 WHERE {
   ?disciplina a :Disciplina ;
-              :nomeDisciplina ?nomeDisciplina .
+              :nomeDisciplina ?nomeLegado .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegado) AS ?nomeDisciplina)
 }
 """)
             if discipline_result["success"]:
@@ -67,7 +134,9 @@ WHERE {{
   ?aula :temDisciplina ?disciplina ;
         :ocorreNoDia ?dia .
   OPTIONAL {{ ?aula :ocorreEmHorario ?horario . }}
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   ?dia :diaSemana ?diaSemana .
   OPTIONAL {{
     ?horario :horaInicio ?horaInicio ;
@@ -95,7 +164,9 @@ WHERE {{
   ?aula :ministraEm {room_instance} ;
         :temDisciplina ?disciplina ;
         :pertenceATurma ?turma .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
 }}
 ORDER BY ?nomeDisciplina ?turma
 """
@@ -123,9 +194,70 @@ ORDER BY ?nomeDisciplina ?turma
 SELECT DISTINCT ?nomeDisciplina ?cargaHoraria
 WHERE {{
   :turma_TADS_{period_number}Periodo :ofereceDisciplina ?disciplina .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
 }}
+"""
+
+        professor_disciplines = re.search(
+            r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
+            normalized,
+        )
+        if (
+            professor_disciplines
+            and "disciplina" in normalized
+            and not any(
+                word in normalized
+                for word in ("horario", "dia", "mesmo", "aula")
+            )
+        ):
+            professor_name = professor_disciplines.group(1)
+            professor_inventory = self.fuseki.execute_query(prefixes + """
+SELECT DISTINCT ?professor ?nomeProfessor
+WHERE {
+  ?professor a :Professor ;
+             :nomeProfessor ?nomeLegado .
+  OPTIONAL {{ ?professor rdfs:label ?labelProfessor . }}
+  BIND(COALESCE(?labelProfessor, ?nomeLegado) AS ?nomeProfessor)
+}
+""")
+            matched_iri = None
+            matched_name = None
+            if professor_inventory["success"]:
+                normalized_search = self._normalize_name(professor_name)
+                for binding in professor_inventory["data"]:
+                    candidate_name = binding.get("nomeProfessor", {}).get("value", "")
+                    normalized_candidate = self._normalize_name(candidate_name)
+                    first_name = normalized_candidate.split()[0] if normalized_candidate else ""
+                    if (
+                        normalized_search
+                        and (
+                            normalized_search in normalized_candidate
+                            or first_name == normalized_search
+                        )
+                    ):
+                        matched_iri = binding["professor"]["value"]
+                        matched_name = candidate_name
+                        break
+            if matched_iri:
+                local_iri = "<" + matched_iri + ">"
+                return prefixes + f"""
+SELECT DISTINCT ?nomeProfessor ?nomeDisciplina ?cargaHoraria
+WHERE {{
+  ?aula :ministradaPor ?professor ;
+        :temDisciplina ?disciplina .
+  OPTIONAL {{ ?professor rdfs:label ?labelProfessor . }}
+  OPTIONAL {{ ?professor :nomeProfessor ?nomeLegadoProfessor . }}
+  BIND(COALESCE(?labelProfessor, ?nomeLegadoProfessor) AS ?nomeProfessor)
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
+  OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
+  VALUES ?professor {{ {local_iri} }}
+}}
+ORDER BY ?nomeDisciplina
 """
 
         professor_schedule = re.search(
@@ -148,8 +280,12 @@ WHERE {{
         :temDisciplina ?disciplina ;
         :ocorreNoDia ?dia ;
         :ocorreEmHorario ?horario .
-  ?prof :nomeProfessor ?nomeProfessor .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?prof rdfs:label ?labelProfessor . }}
+  OPTIONAL {{ ?prof :nomeProfessor ?nomeLegadoProfessor . }}
+  BIND(COALESCE(?labelProfessor, ?nomeLegadoProfessor) AS ?nomeProfessor)
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   ?dia :diaSemana ?diaSemana .
   ?horario :horaInicio ?horaInicio ;
            :horaFim ?horaFim .
@@ -177,7 +313,9 @@ WHERE {
         :ocorreNoDia ?dia ;
         :ocorreEmHorario ?horario .
 
-  ?prof :nomeProfessor ?nomeProfessor .
+  OPTIONAL {{ ?prof rdfs:label ?labelProfessor . }}
+  OPTIONAL {{ ?prof :nomeProfessor ?nomeLegadoProfessor . }}
+  BIND(COALESCE(?labelProfessor, ?nomeLegadoProfessor) AS ?nomeProfessor)
   ?dia :diaSemana ?diaSemana .
   ?horario :horaInicio ?horaInicio .
 }
@@ -200,7 +338,9 @@ SELECT DISTINCT ?nomeDisciplina
        (COUNT(DISTINCT ?aula) AS ?qtdOfertas)
 WHERE {
   ?aula :temDisciplina ?disciplina .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
 }
 GROUP BY ?nomeDisciplina
 HAVING (COUNT(DISTINCT ?aula) > 1)
@@ -212,7 +352,9 @@ ORDER BY DESC(?qtdOfertas) ?nomeDisciplina
 SELECT DISTINCT ?nomeSala
 WHERE {
   ?sala a :Sala ;
-        :nomeSala ?nomeSala .
+        :nomeSala ?nomeLegadoSala .
+  OPTIONAL {{ ?sala rdfs:label ?labelSala . }}
+  BIND(COALESCE(?labelSala, ?nomeLegadoSala) AS ?nomeSala)
   FILTER(
     REGEX(?nomeSala, "TADS", "i")
     ||
@@ -238,7 +380,9 @@ SELECT DISTINCT ?nomeProfessor
 WHERE {{
   ?aula :ocorreNoDia {day_instance} ;
         :ministradaPor ?professor .
-  ?professor :nomeProfessor ?nomeProfessor .
+  OPTIONAL {{ ?professor rdfs:label ?labelProfessor . }}
+  OPTIONAL {{ ?professor :nomeProfessor ?nomeLegadoProfessor . }}
+  BIND(COALESCE(?labelProfessor, ?nomeLegadoProfessor) AS ?nomeProfessor)
 }}
 ORDER BY ?nomeProfessor
 """
@@ -253,7 +397,9 @@ WHERE {{
   ?aula :ocorreNoDia {day_instance} ;
         :temDisciplina ?disciplina ;
         :ocorreEmHorario ?horario .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
   ?horario :horaInicio ?horaInicio ;
            :horaFim ?horaFim .
@@ -275,7 +421,9 @@ WHERE {{
   ?aula :ocorreNoDia {day_instance} ;
         :temDisciplina ?disciplina ;
         :ocorreEmHorario ?horario .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
   ?horario :horaInicio ?horaInicio ;
            :horaFim ?horaFim .
@@ -288,7 +436,9 @@ SELECT DISTINCT ?nomeDisciplina ?cargaHoraria
 WHERE {{
   ?aula :ocorreNoDia {day_instance} ;
         :temDisciplina ?disciplina .
-  ?disciplina :nomeDisciplina ?nomeDisciplina .
+  OPTIONAL {{ ?disciplina rdfs:label ?labelDisciplina . }}
+  OPTIONAL {{ ?disciplina :nomeDisciplina ?nomeLegadoDisciplina . }}
+  BIND(COALESCE(?labelDisciplina, ?nomeLegadoDisciplina) AS ?nomeDisciplina)
   OPTIONAL {{ ?disciplina :temCargaHoraria ?cargaHoraria . }}
 }}
 """
@@ -378,6 +528,39 @@ WHERE {{
                 break
         if "laboratorio de redes" in normalized or "lab redes" in normalized:
             room_label = "Laboratório de Redes"
+
+        schedule_match = re.search(
+            r"\b(\d{1,2})\s*(?:h|:\s*(\d{2}))"
+            r"(?:\s*(?:ate|a|\-|\u2013|\u2014)\s*"
+            r"(\d{1,2})\s*(?:h|:\s*(\d{2})))?",
+            normalized,
+        )
+        if raw_data and schedule_match and day_name:
+            names = []
+            for item in raw_data:
+                name = item.get("nomeDisciplina")
+                if name and name not in names:
+                    names.append(name)
+            labels = {
+                "segunda": "segunda-feira",
+                "terca": "terça-feira",
+                "quarta": "quarta-feira",
+                "quinta": "quinta-feira",
+                "sexta": "sexta-feira",
+                "sabado": "sábado",
+                "domingo": "domingo",
+            }
+            if names:
+                start_hour = schedule_match.group(1).zfill(2)
+                start_minute = schedule_match.group(2) or "00"
+                end_hour = schedule_match.group(3)
+                end_minute = schedule_match.group(4)
+                period = f"{start_hour}:{start_minute}"
+                if end_hour:
+                    period += f" até {end_hour.zfill(2)}:{end_minute or '00'}"
+                lines = [f"Disciplinas ministradas às {period} na {labels[day_name]}:", ""]
+                lines.extend(f"- {name}" for name in names)
+                return "\n".join(lines)
 
         workload_match = re.search(r"\b(\d{1,3})\s*h(?:oras?)?\b", normalized)
         if raw_data and workload_match and "disciplina" in normalized:
@@ -510,6 +693,34 @@ WHERE {{
                 return "Não foram encontradas salas associadas ao curso de TADS."
             lines = ["As salas pertencentes ao curso de TADS são:", ""]
             lines.extend(f"- {name}" for name in names)
+            return "\n".join(lines)
+
+        if (
+            raw_data
+            and "professor" in normalized
+            and "disciplina" in normalized
+            and not day_name
+        ):
+            professor_name = raw_data[0].get("nomeProfessor", "")
+            disciplines = []
+            workloads = {}
+            for item in raw_data:
+                name = item.get("nomeDisciplina")
+                if name and name not in disciplines:
+                    disciplines.append(name)
+                    workloads[name] = item.get("cargaHoraria")
+            if not disciplines:
+                return "Não foram encontradas disciplinas ministradas por esse professor."
+            heading = (
+                f"As disciplinas ministradas pelo professor {professor_name} são:"
+                if professor_name
+                else "As disciplinas ministradas pelo professor são:"
+            )
+            lines = [heading, ""]
+            for name in disciplines:
+                workload = workloads[name]
+                suffix = f" — carga horária: {workload} h" if workload else ""
+                lines.append(f"- {name}{suffix}")
             return "\n".join(lines)
 
         if raw_data and "professor" in normalized and day_name:
