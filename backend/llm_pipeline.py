@@ -493,6 +493,41 @@ WHERE {{
         """
         normalized = self._normalize_question(user_question)
 
+        professor_name_match = re.search(
+            r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
+            normalized,
+        )
+        if (
+            raw_data
+            and professor_name_match
+            and "disciplina" in normalized
+            and not any(
+                word in normalized
+                for word in ("horario", "dia", "quando", "aula")
+            )
+        ):
+            professor_name = ""
+            disciplines = []
+            workloads = {}
+            for item in raw_data:
+                professor_name = professor_name or item.get("nomeProfessor", "")
+                name = item.get("nomeDisciplina")
+                if name and name not in disciplines:
+                    disciplines.append(name)
+                    workloads[name] = item.get("cargaHoraria")
+            if disciplines:
+                heading = (
+                    f"As disciplinas ministradas pelo professor {professor_name} são:"
+                    if professor_name
+                    else "As disciplinas ministradas pelo professor são:"
+                )
+                lines = [heading, ""]
+                for name in disciplines:
+                    workload = workloads[name]
+                    suffix = f" — carga horária: {workload} h" if workload else ""
+                    lines.append(f"- {name}{suffix}")
+                return "\n".join(lines)
+
         period_match = re.search(r"\b([1-6])(?:\s*[oaº°])?\s*periodo\b", normalized)
         period_number = period_match.group(1) if period_match else None
         if not period_number:
@@ -529,38 +564,6 @@ WHERE {{
         if "laboratorio de redes" in normalized or "lab redes" in normalized:
             room_label = "Laboratório de Redes"
 
-        schedule_match = re.search(
-            r"\b(\d{1,2})\s*(?:h|:\s*(\d{2}))"
-            r"(?:\s*(?:ate|a|\-|\u2013|\u2014)\s*"
-            r"(\d{1,2})\s*(?:h|:\s*(\d{2})))?",
-            normalized,
-        )
-        if raw_data and schedule_match and day_name:
-            names = []
-            for item in raw_data:
-                name = item.get("nomeDisciplina")
-                if name and name not in names:
-                    names.append(name)
-            labels = {
-                "segunda": "segunda-feira",
-                "terca": "terça-feira",
-                "quarta": "quarta-feira",
-                "quinta": "quinta-feira",
-                "sexta": "sexta-feira",
-                "sabado": "sábado",
-                "domingo": "domingo",
-            }
-            if names:
-                start_hour = schedule_match.group(1).zfill(2)
-                start_minute = schedule_match.group(2) or "00"
-                end_hour = schedule_match.group(3)
-                end_minute = schedule_match.group(4)
-                period = f"{start_hour}:{start_minute}"
-                if end_hour:
-                    period += f" até {end_hour.zfill(2)}:{end_minute or '00'}"
-                lines = [f"Disciplinas ministradas às {period} na {labels[day_name]}:", ""]
-                lines.extend(f"- {name}" for name in names)
-                return "\n".join(lines)
 
         workload_match = re.search(r"\b(\d{1,3})\s*h(?:oras?)?\b", normalized)
         if raw_data and workload_match and "disciplina" in normalized:
@@ -587,6 +590,34 @@ WHERE {{
             r"(?:professor(?:a)?|pelo professor)\s+([a-z\u00c0-\u00ff]+)",
             normalized,
         )
+        if (
+            raw_data
+            and professor_schedule
+            and "disciplina" in normalized
+            and not any(word in normalized for word in ("horario", "dia", "quando", "aula"))
+        ):
+            professor_name = ""
+            disciplines = []
+            workloads = {}
+            for item in raw_data:
+                professor_name = professor_name or item.get("nomeProfessor", "")
+                name = item.get("nomeDisciplina")
+                if name and name not in disciplines:
+                    disciplines.append(name)
+                    workloads[name] = item.get("cargaHoraria")
+            if disciplines:
+                heading = (
+                    f"As disciplinas ministradas pelo professor {professor_name} são:"
+                    if professor_name
+                    else "As disciplinas ministradas pelo professor são:"
+                )
+                lines = [heading, ""]
+                for name in disciplines:
+                    workload = workloads[name]
+                    suffix = f" — carga horária: {workload} h" if workload else ""
+                    lines.append(f"- {name}{suffix}")
+                return "\n".join(lines)
+
         if (
             raw_data
             and professor_schedule
