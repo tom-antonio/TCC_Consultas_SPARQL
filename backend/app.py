@@ -48,6 +48,7 @@ ingestion_status = {
     "elapsed_seconds": 0,
     "estimated_remaining_seconds": None,
 }
+ingestion_generation = 0
 
 
 def update_ingestion_progress(progress_percent: int, stage: str) -> None:
@@ -143,6 +144,7 @@ def watch_anythingllm_uploads() -> None:
                         continue
 
                     try:
+                        generation_at_start = ingestion_generation
                         metadata = json.loads(
                             metadata_path.read_text(encoding="utf-8")
                         )
@@ -165,10 +167,14 @@ def watch_anythingllm_uploads() -> None:
                             started_at=time.time(),
                         )
                         update_ingestion_progress(5, "Texto do PDF recebido")
+                        generation_at_start = ingestion_generation
                         success = ingestion_pipeline.process_text(
                             page_content,
                             status_callback=update_ingestion_progress,
                         )
+                        if generation_at_start != ingestion_generation:
+                            reset_aula_instances()
+                            continue
                         if success:
                             ingested_ids.add(upload_id)
                             save_ingestion_state(ingested_ids)
@@ -190,6 +196,8 @@ def watch_anythingllm_uploads() -> None:
                                 last_error="Falha ao gravar as triplas no Fuseki.",
                             )
                     except Exception as error:
+                        if generation_at_start != ingestion_generation:
+                            continue
                         ingestion_status.update(
                             last_upload=metadata_path.name,
                             last_status="error",
@@ -291,6 +299,8 @@ def format_ingestion_progress() -> str:
 def reset_ontology():
     """Remove todas as instâncias de Aula ao criar uma nova thread."""
     try:
+        global ingestion_generation
+        ingestion_generation += 1
         reset_aula_instances()
         if ANYTHINGLLM_UPLOADS_DIR.exists():
             ingested_ids = {
