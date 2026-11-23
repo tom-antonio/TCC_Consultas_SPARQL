@@ -30,6 +30,7 @@ services:
     image: mintplexlabs/anythingllm:latest
     environment:
       STORAGE_DIR: /app/server/storage
+      JWT_SECRET: ${ANYTHINGLLM_JWT_SECRET}
       LLM_PROVIDER: generic-openai
       GENERIC_OPEN_AI_BASE_PATH: http://backend:8000/v1
       GENERIC_OPEN_AI_API_KEY: ${ANYTHINGLLM_GENERIC_API_KEY:-anythingllm-local}
