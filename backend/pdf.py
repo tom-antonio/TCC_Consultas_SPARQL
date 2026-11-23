@@ -167,6 +167,46 @@ ORDER BY ?nome
             disciplines.append((iri.rsplit("#", 1)[-1], name))
         return disciplines
 
+    def get_turmas_offering(self, local_iri: str) -> list:
+        sparql = SPARQLWrapper(FUSEKI_QUERY_URL)
+        sparql.setReturnFormat(JSON)
+        sparql.setMethod(GET)
+        if FUSEKI_ADMIN_PASSWORD:
+            sparql.setCredentials(FUSEKI_USER, FUSEKI_ADMIN_PASSWORD)
+        sparql.setQuery(f"""{ONTOLOGY_PREFIX}
+SELECT DISTINCT ?turma
+WHERE {{
+  ?turma a :Turma ;
+         :ofereceDisciplina :{local_iri} .
+}}
+ORDER BY ?turma
+""")
+        bindings = sparql.query().convert()["results"]["bindings"]
+        return [
+            binding["turma"]["value"].rsplit("#", 1)[-1]
+            for binding in bindings
+        ]
+
+    def get_room_context(self, block_text: str, discipline_name: str) -> str:
+        normalized_block = self._normalize_resource_name(block_text)
+        normalized_name = self._normalize_resource_name(discipline_name)
+        name_match = re.search(re.escape(normalized_name), normalized_block)
+        context = normalized_block
+        if name_match:
+            context_start = max(0, name_match.start() - 20)
+            context_end = min(len(normalized_block), name_match.end() + 100)
+            context = normalized_block[context_start:context_end]
+
+        if "tads 03" in context or "tads03" in context:
+            return ":labIII"
+        if "tads 02" in context or "tads02" in context:
+            return ":labII"
+        if "tads 01" in context or "tads01" in context:
+            return ":labI"
+        if "redes" in context:
+            return ":labRedes"
+        return ""
+
     def build_generic_saturday_aulas(self, day_text: str) -> str:
         """Cria aulas de sábado por correspondência dinâmica entre texto e nomes da ontologia."""
         disciplines = self.get_named_disciplines()
@@ -220,9 +260,17 @@ ORDER BY ?nome
                     continue
                 safe_name = re.sub(r"[^A-Za-z0-9]", "_", discipline_name)
                 aula_name = f":aula_{safe_name}_Sab_{hour.replace(':', '')}"
+                room = self.get_room_context(block_text, discipline_name)
+                offering_turmas = self.get_turmas_offering(local_iri)
+                turma_clause = ""
+                if offering_turmas:
+                    turma_clause = f"\n      :pertenceATurma :{offering_turmas[0]} ;"
+                room_clause = f"\n      :ministraEm {room} ;" if room else ""
                 aula_parts.append(
                     f"{aula_name} a :Aula ;\n"
-                    f"      :temDisciplina :{local_iri} ;\n"
+                    f"      :temDisciplina :{local_iri} ;"
+                    f"{room_clause}"
+                    f"{turma_clause}\n"
                     f"      :ocorreNoDia :diaSab ;\n"
                     f"      :ocorreEmHorario {horario} ."
                 )
