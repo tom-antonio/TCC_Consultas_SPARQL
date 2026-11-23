@@ -125,6 +125,17 @@ def watch_anythingllm_uploads() -> None:
 
     while True:
         try:
+            if ingestion_status["last_status"] == "processing":
+                started_at = ingestion_status["started_at"]
+                if started_at is not None and time.time() - started_at > 300:
+                    ingestion_status.update(
+                        last_status="error",
+                        last_error="Tempo máximo de ingestão excedido.",
+                        progress_percent=100,
+                        stage="Falha por tempo excedido",
+                        estimated_remaining_seconds=0,
+                    )
+
             if ANYTHINGLLM_UPLOADS_DIR.exists():
                 for metadata_path in ANYTHINGLLM_UPLOADS_DIR.glob("*.json"):
                     upload_id = metadata_path.stem
@@ -183,9 +194,18 @@ def watch_anythingllm_uploads() -> None:
                             last_upload=metadata_path.name,
                             last_status="error",
                             last_error=str(error),
+                            progress_percent=100,
+                            stage="Falha na ingestão",
+                            estimated_remaining_seconds=0,
                         )
         except Exception as error:
-            ingestion_status.update(last_status="error", last_error=str(error))
+            ingestion_status.update(
+                last_status="error",
+                last_error=str(error),
+                progress_percent=100,
+                stage="Falha na ingestão",
+                estimated_remaining_seconds=0,
+            )
 
         time.sleep(3)
 

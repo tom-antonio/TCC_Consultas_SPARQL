@@ -323,162 +323,49 @@ INSERT DATA {{
 }}
 """
 
-        day_names = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado")
-        inserts = []
+        if status_callback:
+            status_callback(15, "Enviando grade completa à LLM")
 
-        for day_index, day_name in enumerate(day_names, start=1):
-            if status_callback:
-                status_callback(
-                    15 + int((day_index - 1) * 65 / len(day_names)),
-                    f"Extraindo triplas de {day_name}",
-                )
-            normalized_day = self._normalize_day_name(day_name)
-            if day_name == "sábado":
-                day_pattern = re.compile(r"(?ims)^Sábado\b.*")
-            else:
-                day_pattern = re.compile(
-                    rf"(?ims)^(?:{normalized_day}|{day_name})\b.*?"
-                    rf"(?=^(?:Segunda|Terça|Quarta|Quinta|Sexta|Sábado)\b|\Z)"
-                )
-            day_match = day_pattern.search(pdf_text)
-            day_text = day_match.group(0).strip() if day_match else ""
-            if day_name == "sábado" and not day_text:
-                saturday_match = re.search(r"(?is)\bSábado\b.*", pdf_text)
-                day_text = saturday_match.group(0).strip() if saturday_match else ""
-            if not day_text:
-                continue
+        response = self.groq_client.chat.completions.create(
+            model=self.model_name,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {
+                    "role": "user",
+                    "content": (
+                        "Extraia todas as aulas da grade completa.\n"
+                        "Retorne uma única instrução INSERT DATA.\n"
+                        "Não omita disciplinas, salas, turmas ou horários.\n"
+                        f"Texto completo extraído do PDF:\n{pdf_text}"
+                    ),
+                },
+            ],
+            temperature=0.0,
+            max_tokens=12000,
+            timeout=180,
+        )
 
-            room_markers = (
-                (r"TADS\s*0*1", ":labI"),
-                (r"TADS\s*0*2", ":labII"),
-                (r"TADS\s*0*3", ":labIII"),
-                (r"(LAB\s*)?REDES", ":labRedes"),
-            )
-            best_inner = ""
-            best_coverage = -1
+        raw_output = (response.choices[0].message.content or "").strip()
+        if not raw_output:
+            raise RuntimeError("A LLM não gerou conteúdo para as triplas.")
 
-            for attempt in range(3 if day_name == "sábado" else 2):
-                correction = ""
-                if day_name == "sábado":
-                    correction = (
-                        "Trate cada linha de horário do trecho de Sábado como uma ocorrência separada "
-                        "e inclua todos os blocos presentes, incluindo manhã e tarde."
-                        " Sua resposta deve conter pelo menos uma triplas usando :ocorreNoDia :diaSab."
-                    )
-                if attempt > 0 and best_inner:
-                    missing_rooms = []
-                    for marker_pattern, room_instance in room_markers:
-                        marker_count = len(re.findall(marker_pattern, day_text, flags=re.IGNORECASE))
-                        room_count = len(re.findall(
-                            rf":ministraEm\s+{re.escape(room_instance)}",
-                            best_inner,
-                            flags=re.IGNORECASE,
-                        ))
-                        if marker_count > room_count:
-                            missing_rooms.append(room_instance)
-                    if missing_rooms:
-                        correction = (
-                            "Corrija a resposta anterior: o trecho contém ocorrências das salas "
-                            + ", ".join(missing_rooms)
-                            + ", mas elas não foram todas incluídas."
-                        )
+        clean_insert = re.sub(
+            r"```(?:sparql)?\s*(.*?)\s*```",
+            r"\1",
+            raw_output,
+            flags=re.DOTALL,
+        ).strip()
+        insert_match = re.search(
+            r"\bINSERT\s+DATA\s*\{.*",
+            clean_insert,
+            flags=re.DOTALL | re.IGNORECASE,
+        )
+        if not insert_match:
+            raise RuntimeError("A LLM não retornou uma instrução INSERT DATA válida.")
 
-                response = self.groq_client.chat.completions.create(
-                    model=self.model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {
-                            "role": "user",
-                            "content": (
-                                f"Extraia SOMENTE as aulas do dia {day_name}.\n"
-                                "Gere uma triplas para cada combinação de disciplina, período, docente, sala e horário indicada no trecho.\n"
-                                "Não deixe de incluir todas as salas identificadas no trecho.\n"
-                                f"{correction}\n"
-                                f"Texto completo extraído do PDF:\n{pdf_text}\n\n"
-                                f"Trecho que corresponde ao dia solicitado:\n{day_text}"
-                            ),
-                        },
-                    ],
-                    temperature=0.0,
-                    max_tokens=6000,
-                )
-
-                choice = response.choices[0]
-                raw_output = (choice.message.content or "").strip()
-                if not raw_output:
-                    continue
-
-                clean_insert = re.sub(
-                    r"```(?:sparql)?\s*(.*?)\s*```",
-                    r"\1",
-                    raw_output,
-                    flags=re.DOTALL,
-                ).strip()
-                insert_match = re.search(
-                    r"\bINSERT\s+DATA\s*\{.*",
-                    clean_insert,
-                    flags=re.DOTALL | re.IGNORECASE,
-                )
-                if not insert_match:
-                    continue
-
-                block = insert_match.group(0).strip()
-                opening_brace = block.find("{")
-                closing_brace = block.rfind("}")
-                if opening_brace < 0 or closing_brace <= opening_brace:
-                    continue
-
-                inner = block[opening_brace + 1:closing_brace].strip()
-                if not inner:
-                    continue
-
-                if day_name == "sábado" and not re.search(
-                    r":ocorreNoDia\s+:diaSab",
-                    inner,
-                    flags=re.IGNORECASE,
-                ):
-                    continue
-
-                coverage = 0
-                for marker_pattern, room_instance in room_markers:
-                    marker_count = len(re.findall(marker_pattern, day_text, flags=re.IGNORECASE))
-                    room_count = len(re.findall(
-                        rf":ministraEm\s+{re.escape(room_instance)}",
-                        inner,
-                        flags=re.IGNORECASE,
-                    ))
-                    coverage += min(marker_count, room_count)
-
-                if coverage > best_coverage:
-                    best_inner = inner
-                    best_coverage = coverage
-
-            if day_name == "sábado":
-                saturday_fallback = self.build_generic_saturday_aulas(day_text)
-                if saturday_fallback:
-                    inserts.append(saturday_fallback)
-                    continue
-
-            if best_inner:
-                if day_name == "sábado":
-                    saturday_fallback = self.build_generic_saturday_aulas(day_text)
-                    if saturday_fallback:
-                        inserts.append(saturday_fallback)
-                    else:
-                        parts = re.split(r"(?ms)(?=^:[A-Za-zÀ-ÿ0-9_]+\s+a\s+:Aula)", best_inner)
-                        non_saturday_parts = [
-                            part.strip()
-                            for part in parts
-                            if part.strip() and ":ocorreNoDia :diaSab" not in part
-                        ]
-                        if non_saturday_parts:
-                            inserts.append("\n\n".join(non_saturday_parts))
-                else:
-                    inserts.append(best_inner)
-
-        if not inserts:
-            raise RuntimeError("A LLM não gerou nenhuma instrução INSERT DATA válida.")
-        return "INSERT DATA {\n" + "\n\n".join(inserts) + "\n}"
+        if status_callback:
+            status_callback(78, "Normalizando triplas geradas")
+        return insert_match.group(0).strip()
 
     def populate_fuseki(self, insert_query: str) -> bool:
         """Executa a query INSERT DATA diretamente no Fuseki via endpoint /update."""
